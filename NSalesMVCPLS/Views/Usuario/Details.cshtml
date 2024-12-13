@@ -1,0 +1,106 @@
+﻿@model Entities.Usuarios
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Detalles del Usuario</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #343a40;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #1d3557;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h3 {
+            color: #457b9d;
+            font-size: 20px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #1d3557;
+            padding-bottom: 5px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: #1d3557;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #1d3557;
+            font-weight: bold;
+            text-align: center;
+        }
+
+            a:hover {
+                text-decoration: underline;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Detalles del Usuario</h2>
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger">
+                @ViewBag.ErrorMessage
+            </div>
+        }
+        <div>
+            <h3>Información Personal</h3>
+            <p><strong>Nombre de Usuario:</strong> @Model.UserName</p>
+            <p><strong>Correo Electrónico:</strong> @Model.Email</p>
+            <p>
+                <strong>Rol:</strong>
+                @(
+                    Model.RoleID == 1 ? "Administrador" :
+                    Model.RoleID == 2 ? "Editor" :
+                    Model.RoleID == 3 ? "Viewer" : "Rol Desconocido"
+                 )
+            </p>
+            <p><strong>Contraseña:</strong> @Model.Password</p>
+        </div>
+
+        <a href="@Url.Action("Index", "Usuario")">Volver a la lista de usuarios</a>
+    </div>
+</body>
+</html>

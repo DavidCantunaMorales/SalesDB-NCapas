@@ -1,0 +1,168 @@
+﻿@model Entities.Usuarios
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Crear Nuevo Usuario</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #343a40;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #1d3557;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+            input:focus, select:focus {
+                border-color: #1d3557;
+                outline: none;
+                box-shadow: 0 0 5px rgba(29, 53, 87, 0.3);
+            }
+
+        .validation-message {
+            color: red;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #1d3557;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+            button:hover {
+                background-color: #457b9d;
+            }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #1d3557;
+            font-weight: bold;
+            text-align: center;
+        }
+
+            a:hover {
+                text-decoration: underline;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Crear Nuevo Usuario</h2>
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger">
+                @ViewBag.ErrorMessage
+            </div>
+        }
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <!-- Campo Rol -->
+            <div>
+                @Html.LabelFor(model => model.RoleID)
+                @Html.DropDownListFor(model => model.RoleID, new List<SelectListItem>
+                {
+                    new SelectListItem { Text = "Administrador", Value = "1" },
+                    new SelectListItem { Text = "Editor", Value = "2" },
+                    new SelectListItem { Text = "Viewer", Value = "3" }
+                })
+                <div class="validation-message">
+                    @Html.ValidationMessageFor(model => model.RoleID)
+                </div>
+            </div>
+
+            <!-- Campo Nombre de Usuario -->
+            <div>
+                @Html.LabelFor(model => model.UserName)
+                @Html.TextBoxFor(model => model.UserName)
+                <div class="validation-message">
+                    @Html.ValidationMessageFor(model => model.UserName)
+                </div>
+            </div>
+
+            <!-- Campo Correo Electrónico -->
+            <div>
+                @Html.LabelFor(model => model.Email)
+                @Html.TextBoxFor(model => model.Email, new { type = "email" })
+                <div class="validation-message">
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+            </div>
+
+            <!-- Campo Contraseña -->
+            <div>
+                @Html.LabelFor(model => model.Password)
+                @Html.PasswordFor(model => model.Password)
+                <div class="validation-message">
+                    @Html.ValidationMessageFor(model => model.Password)
+                </div>
+            </div>
+
+            <!-- Agregar este campo oculto antes del botón de submit -->
+            @Html.HiddenFor(model => model.IsActive, new { Value = true })
+
+            <button type="submit">Crear Usuario</button>
+        }
+        <a href="@Url.Action("Index", "Usuario")">Volver</a>
+    </div>
+</body>
+</html>

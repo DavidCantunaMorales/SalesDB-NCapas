@@ -1,0 +1,172 @@
+﻿@model IEnumerable<NSalesMVCPLS.Models.ProductViewModel>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Productos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #343a40;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #1d3557;
+            font-size: 28px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table, th, td {
+            border: none;
+        }
+
+        th {
+            background-color: #1d3557;
+            color: white;
+            text-align: left;
+            padding: 15px;
+        }
+
+        td {
+            padding: 12px;
+            text-align: left;
+            color: #555;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .action-buttons a {
+            margin-right: 10px;
+            text-decoration: none;
+            padding: 8px 12px;
+            color: white;
+            background-color: #1d3557;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+            .action-buttons a:hover {
+                background-color: #457b9d;
+            }
+
+        .add-button {
+            text-decoration: none;
+            color: white;
+            background-color: #1d3557;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+            .add-button:hover {
+                background-color: #457b9d;
+            }
+
+        .logout-button {
+            text-decoration: none;
+            color: white;
+            background-color: #dc3545;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+            .logout-button:hover {
+                background-color: #c82333;
+            }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        Listado de Productos
+        <div>
+            <a href="@Url.Action("Create", "Product")" class="add-button">Agregar Producto</a>
+            <a href="@Url.Action("Dashboard", "Home")" class="logout-button">Volver al Dashboard</a>
+        </div>
+    </h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Precio Unidad</th>
+                <th>Unidades Stock</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var product in Model)
+                {
+                    <tr>
+                        <td>@product.ProductID</td>
+                        <td>@product.ProductName</td>
+                        <td>@product.CategoryName</td>
+                        <td>@string.Format("{0:C}", product.UnitPrice)</td>
+                        <td>@product.UnitsInStock</td>
+                        <td class="action-buttons">
+                            <a href="@Url.Action("Details", "Product", new { id = product.ProductID })">Ver</a>
+                            <a href="@Url.Action("Edit", "Product", new { id = product.ProductID })">Editar</a>
+                            <a href="@Url.Action("Delete", "Product", new { id = product.ProductID })">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" style="text-align: center;">No hay productos disponibles.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="error-message">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+</body>
+</html>

@@ -1,0 +1,168 @@
+﻿@model IEnumerable<Entities.Categories>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Categorías</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #343a40;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #1d3557;
+            font-size: 28px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table, th, td {
+            border: none;
+        }
+
+        th {
+            background-color: #1d3557;
+            color: white;
+            text-align: left;
+            padding: 15px;
+        }
+
+        td {
+            padding: 12px;
+            text-align: left;
+            color: #555;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .action-buttons a {
+            margin-right: 10px;
+            text-decoration: none;
+            padding: 8px 12px;
+            color: white;
+            background-color: #1d3557;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+            .action-buttons a:hover {
+                background-color: #457b9d;
+            }
+
+        .add-button {
+            text-decoration: none;
+            color: white;
+            background-color: #1d3557;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+            .add-button:hover {
+                background-color: #457b9d;
+            }
+
+        .logout-button {
+            text-decoration: none;
+            color: white;
+            background-color: #dc3545;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+            .logout-button:hover {
+                background-color: #c82333;
+            }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        Listado de Categorías
+        <div>
+            <a href="@Url.Action("Create", "Category")" class="add-button">Agregar Categoría</a>
+            <a href="@Url.Action("Dashboard", "Home")" class="logout-button">Volver al Dashboard</a>
+        </div>
+    </h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var category in Model)
+                {
+                    <tr>
+                        <td>@category.CategoryID</td>
+                        <td>@category.CategoryName</td>
+                        <td>@category.Description</td>
+                        <td class="action-buttons">
+                            <a href="@Url.Action("Details", "Category", new { id = category.CategoryID })">Ver</a>
+                            <a href="@Url.Action("Edit", "Category", new { id = category.CategoryID })">Editar</a>
+                            <a href="@Url.Action("Delete", "Category", new { id = category.CategoryID })">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" style="text-align: center;">No hay categorías disponibles.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="error-message">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+</body>
+</html>

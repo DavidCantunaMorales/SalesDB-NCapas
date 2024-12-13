@@ -1,0 +1,152 @@
+﻿@model Entities.Categories
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Crear Nueva Categoría</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #343a40;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #1d3557;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        textarea {
+            height: 100px;
+            resize: none;
+        }
+
+            input:focus, textarea:focus {
+                border-color: #1d3557;
+                outline: none;
+                box-shadow: 0 0 5px rgba(29, 53, 87, 0.3);
+            }
+
+        .validation-message {
+            color: red;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #1d3557;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+            button:hover {
+                background-color: #457b9d;
+            }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #1d3557;
+            font-weight: bold;
+            text-align: center;
+        }
+
+            a:hover {
+                text-decoration: underline;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Crear Nueva Categoría</h2>
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger">
+                @ViewBag.ErrorMessage
+            </div>
+        }
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <!-- Campo CategoryName -->
+            <div>
+                @Html.LabelFor(model => model.CategoryName)
+                @Html.TextBoxFor(model => model.CategoryName)
+                <div class="validation-message">
+                    @Html.ValidationMessageFor(model => model.CategoryName)
+                </div>
+            </div>
+
+            <!-- Campo Description -->
+            <div>
+                @Html.LabelFor(model => model.Description)
+                @Html.TextAreaFor(model => model.Description)
+                <div class="validation-message">
+                    @Html.ValidationMessageFor(model => model.Description)
+                </div>
+            </div>
+
+            <button type="submit">Crear</button>
+        }
+
+        <a href="@Url.Action("Index", "Category")">Volver</a>
+    </div>
+</body>
+</html>

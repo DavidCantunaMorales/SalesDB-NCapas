@@ -1,0 +1,126 @@
+﻿@model Entities.Usuarios
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Desactivar Usuario</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #343a40;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #1d3557;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #dc3545;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: #1d3557;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+            button:hover {
+                background-color: #c82333;
+            }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #1d3557;
+            font-weight: bold;
+        }
+
+            a:hover {
+                text-decoration: underline;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Desactivar Usuario</h2>
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger">
+                @ViewBag.ErrorMessage
+            </div>
+        }
+        <div>
+            <h3>¿Estás seguro de que deseas desactivar el usuario "<strong>@Model.UserName</strong>"?</h3>
+            <p>Esta acción no se puede deshacer.</p>
+
+            <h4>Detalles del Usuario:</h4>
+            <p><strong>Correo Electrónico:</strong> @Model.Email</p>
+            <p>
+                <strong>Rol:</strong>
+                @(
+                    Model.RoleID == 1 ? "Administrador" :
+                    Model.RoleID == 2 ? "Editor" :
+                    Model.RoleID == 3 ? "Viewer" : "Rol Desconocido"
+                )
+            </p>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.UserID)
+            <button type="submit">Desactivar</button>
+        }
+        <a href="@Url.Action("Index", "Usuario")">Cancelar</a>
+    </div>
+</body>
+</html>

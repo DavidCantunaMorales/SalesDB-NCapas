@@ -1,0 +1,164 @@
+﻿@model Entities.Products
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Crear Producto</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #343a40;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #1d3557;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+            input:focus, select:focus {
+                border-color: #1d3557;
+                outline: none;
+                box-shadow: 0 0 5px rgba(29, 53, 87, 0.3);
+            }
+
+        .validation-message {
+            color: red;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #1d3557;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+            button:hover {
+                background-color: #457b9d;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 5px;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Crear Producto</h1>
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.ErrorMessage
+            </div>
+        }
+
+        @using (Html.BeginForm("Create", "Product", FormMethod.Post))
+        {
+            <div>
+                @Html.LabelFor(model => model.ProductName, "Nombre del Producto")
+                @Html.TextBoxFor(model => model.ProductName)
+                <div class="validation-message">
+                    @Html.ValidationMessageFor(model => model.ProductName)
+                </div>
+            </div>
+
+            <!-- Campo CategoryID -->
+            <div>
+                @Html.LabelFor(model => model.CategoryID, "Categoría")
+                <div class="input-group">
+                    @Html.DropDownListFor(model => model.CategoryID, (SelectList)ViewBag.Categories, "Selecciona una Categoría", new { @class = "form-control" })
+                </div>
+                <div class="validation-message">
+                    @Html.ValidationMessageFor(model => model.CategoryID)
+                </div>
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.UnitPrice, "Precio Unitario")
+                @Html.TextBoxFor(model => model.UnitPrice)
+                <div class="validation-message">
+                    @Html.ValidationMessageFor(model => model.UnitPrice)
+                </div>
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.UnitsInStock, "Unidades en Stock")
+                @Html.TextBoxFor(model => model.UnitsInStock)
+                <div class="validation-message">
+                    @Html.ValidationMessageFor(model => model.UnitsInStock)
+                </div>
+            </div>
+
+            <button type="submit">Crear</button>
+            <a href="@Url.Action("Index", "Product")" class="btn-secondary">Cancelar</a>
+        }
+    </div>
+</body>
+</html>

@@ -1,0 +1,115 @@
+﻿@model Entities.Products
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Detalles del Producto</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #343a40;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #1d3557;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h3 {
+            color: #457b9d;
+            font-size: 20px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #1d3557;
+            padding-bottom: 5px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: #1d3557;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+            background-color: #6c757d;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+            a:hover {
+                background-color: #5a6268;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Detalles del Producto</h1>
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger">
+                @ViewBag.ErrorMessage
+            </div>
+        }
+
+        <div>
+            <h3>Nombre del Producto: <strong>@Model.ProductName</strong></h3>
+        </div>
+
+        <div>
+            <p><strong>Categoría:</strong> @Model.CategoryID</p>
+        </div>
+
+        <div>
+            <p><strong>Precio Unitario:</strong> @string.Format("{0:C}", @Model.UnitPrice)</p>
+        </div>
+
+        <div>
+            <p><strong>Unidades en Stock:</strong> @Model.UnitsInStock</p>
+        </div>
+
+        <a href="@Url.Action("Index", "Product")" class="btn btn-secondary">Volver a la lista de productos</a>
+    </div>
+</body>
+</html>

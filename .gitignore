@@ -1,0 +1,22 @@
+# .NET Core
+bin/
+obj/
+.vs/
+.vscode/
+.idea/
+
+# Archivos de dependencias de NuGet
+project.lock.json
+project.fragment.lock.json
+
+# Archivos específicos de Visual Studio
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# Otros
+packages/
+appsettings.Development.json
+appsettings.Local.json
+*.publishsettings
